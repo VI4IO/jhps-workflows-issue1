@@ -1,11 +1,8 @@
 #!/bin/bash
 
 filenames=( \
-	"job_codings.csv" \
-	"job_io_duration.csv" \
-	"job_metrics.csv" \
-	"job_phases.csv" \
-	"job_metadata.csv" \
+	"job_codings_clusters.csv" \
+	"progress.csv" \
 )
 
 for filename in ${filenames[@]}; do
