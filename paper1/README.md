@@ -99,6 +99,10 @@ approximated by the fractions of segments that are considered I/O intensive.
 
 
 ## Evaluation
-The Run-Script `run.sh` in the root directory of the repository extracts datasets in the dataset and evaluation directories.
+The Run-Script `./run.sh` in the root directory of the repository extracts datasets in the dataset and evaluation directories.
 Then it clusters data and stores the results in the evaluation directory.
 Finally it run analysis scripts and stores output in the evaluation directory.
+
+Clustering can take several hours on a super computer.
+Therefore, the folder `./evaluation` contains intermediate clustering results.
+The evaluation scripts can use them to re-produce figures, that were use in the "Evaluation" section in the paper.
