@@ -2,6 +2,9 @@ extern crate num_cpus;
 extern crate jemallocator;
 extern crate clap;
 
+//mod clustering_alg;
+//mod sim_job_finder;
+
 use clap::{Arg, App, SubCommand};
 
 #[global_allocator]
@@ -146,14 +149,14 @@ fn main() {
         let nrows = 1000000;
         let n_workers = num_cpus::get();
 
-        let cfg = run::Config{
+        let cfg = run::clustering_alg::Config{
             dataset_fn,
             output_fn,
             progress_fn,
             nrows,
             n_workers,
         };
-        if let Err(e) = run::run(cfg) {
+        if let Err(e) = run::create_clusters(cfg) {
             eprintln!("Error occured in run: {}", e);
             process::exit(1);
         }
@@ -177,10 +180,14 @@ fn main() {
             progress_fn = String::from(value);
         }
 
-        let nrows = 1000000;
+        let mut nrows = 0;
+        if let Some(value) = matches.value_of("nrows") {
+            nrows = String::from(value).parse::<usize>().unwrap();
+        }
+
         let n_workers = num_cpus::get();
 
-        let cfg = run::ConfigSimilarity{
+        let cfg = run::sim_job_finder::Config{
             jobid,
             dataset_fn,
             output_fn,
