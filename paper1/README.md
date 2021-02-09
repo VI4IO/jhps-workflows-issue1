@@ -40,7 +40,7 @@ Anonymized job data
 
 Hexadecimal and binary codings
 ### job_codings.csv
-#### Binary coding 
+#### B-Coding 
 Binary coding Binary coding represents monitoring data as a sequence of numbers, where each number represents the overall file system usage. 
 The number is computed based on the nine metrics found in the segment, e.g., if a phase is read and write intensive it is encoded as one type of behavior. In this approach, each conceivable combination of activities has a unique number.
 The approach maps the three categories to the following two states: The LowIO category is mapped to the non-active (0) state, and HighIO and CriticalIO categories are mapped to the active (1) state. On one side, by doing this, we lose information about performance intensity, but on other side, this simplification allows a more comprehensible comparison of job activities.
@@ -62,7 +62,7 @@ To catch such jobs, we aggregate multiple consecutive zero segments into one zer
 [1:5:0:96:96:96:96:96:96:96]
 ```
 
-#### Hexadecimal Coding
+#### Q-Coding
 This coding preserves monitoring data for each metric and each segment. 
 As the name suggests, the value of a segment is converted into a hexadecimal number to allow creation of a string representing the I/O behavior. 
 The numbers are obtained in two steps. 
@@ -71,15 +71,15 @@ Secondly, the mean values are quantized into NonIO + 16 I/O levels – 0 (NonI0)
 The example below shows hexadecimal coding for a job containing 6 segments.
 
 ```
-’md_file_create’ : [0:0:2:2:2:9]
-’md_file_delete’ : [0:0:0:0:0:0]
-’md_mod’         : [0:0:0:0:0:0]
-’md_other’       : [0:0:0:0:0:0]
-’md_read ’       : [0:0:0:9:3:0]
-’read_bytes’     : [5:0:0:0:0:0]
-’read_calls’     : [0:0:0:0:0:0]
-’write_bytes’    : [0:0:0:0:f:f]
-’write_calls’    : [0:0:0:0:0:0]
+’q16_md_file_create’ : [0:0:2:2:2:9]
+’q16_md_file_delete’ : [0:0:0:0:0:0]
+’q16_md_mod’         : [0:0:0:0:0:0]
+’q16_md_other’       : [0:0:0:0:0:0]
+’q16_md_read ’       : [0:0:0:9:3:0]
+’q16_read_bytes’     : [5:0:0:0:0:0]
+’q16_read_calls’     : [0:0:0:0:0:0]
+’q16_write_bytes’    : [0:0:0:0:f:f]
+’q16_write_calls’    : [0:0:0:0:0:0]
 ```
 
 ### job_io_duration.csv
@@ -87,7 +87,7 @@ The IO-duration job profile contains the fraction of runtime, a job spent doing 
 The columns are named according to the following scheme: metric category, e.g, bytes read 0 or md file delete 4. 
 The first part is the one of the nine metric names and the second part is the category number (LowIO=0, HighIO=1 and CriticalIO=4). 
 These columns are used for machine learning as input features. 
-There is a constraint for each metric (metric 0 + metric 1 + metric 4 = 1), that makes 9 features redundant, because they can be computed from the other features. So we have to deal with 18 features; max is 1.17.
+There is a constraint for each metric (metric 0 + metric 1 + metric 4 = 1), that makes 9 features redundant, because they can be computed from the other features. So we have to deal with 18 features; max is 1.17.
 
 
 ### job_metrics.csv
@@ -98,6 +98,7 @@ runtime.
 approximated by the fractions of segments that are considered I/O intensive.
 
 
-## Evaluation (WIP)
-The Run-Script src/run.sh contains clusters the profile and codings datasets and stores the result in ./evaluation folder.
-Please consult the script for further details.
+## Evaluation
+The Run-Script `run.sh` in the root directory of the repository extracts datasets in the dataset and evaluation directories.
+Then it clusters data and stores the results in the evaluation directory.
+Finally it run analysis scripts and stores output in the evaluation directory.
