@@ -91,10 +91,10 @@ There is a constraint for each metric (metric 0 + metric 1 + metric 4 = 1), that
 
 
 ### job_metrics.csv
-• Job-I/O-Balance: indicates how I/O load is distributed between nodes during job
+  - Job-I/O-Balance: indicates how I/O load is distributed between nodes during job
 runtime.
-• Job-I/O-Utilization: shows the average I/O load during I/O-phases.
-• Job-I/O-Problem-Time is the fraction of job runtime that is I/O-intensive; it is
+  - Job-I/O-Utilization: shows the average I/O load during I/O-phases.
+  - Job-I/O-Problem-Time is the fraction of job runtime that is I/O-intensive; it is
 approximated by the fractions of segments that are considered I/O intensive.
 
 
