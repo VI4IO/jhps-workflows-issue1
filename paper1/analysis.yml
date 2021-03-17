@@ -1,0 +1,4 @@
+steps:
+- id: analysis
+  uses: ./docker
+  runs: [./run.sh]
